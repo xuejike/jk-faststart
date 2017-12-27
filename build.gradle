@@ -1,0 +1,52 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+
+		maven { url 'https://jitpack.io' }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.github.xuejike.springboot'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven { url 'https://jitpack.io' }
+}
+
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-freemarker')
+	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile 'org.apache.shiro:shiro-spring:1.2.5'
+//	compile('org.springframework.session:spring-session')
+	compile('org.springframework.boot:spring-boot-starter-web')
+//	runtime('org.springframework.boot:spring-boot-devtools')
+	runtime('mysql:mysql-connector-java')
+	compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+	compileOnly('org.projectlombok:lombok')
+//	compile 'com.github.xuejike:hibernate-lambda-query:0.1.4bate4.2.14'
+//    compile 'com.github.xuejike:bd_framework_core:v0.1.5.8_starter'
+	compile 'com.qiniu:qiniu-java-sdk:7.1.1'
+	compile 'joda-time:joda-time:2.3'
+	compile 'org.jeecg:easypoi-base:2.1.5'
+	compile 'org.jeecg:easypoi-web:2.1.5'
+	compile 'org.jeecg:easypoi-annotation:2.1.5'
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+}
