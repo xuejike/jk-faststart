@@ -8,7 +8,7 @@ import com.github.xuejike.springboot.jkfaststart.repository.AdminRoleRepository;
 import com.github.xuejike.springboot.jkfaststart.repository.AdminUserRepository;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -47,8 +47,8 @@ public class HomeController {
 //        user.setPwd(DigestUtils.md5Hex("123456"));
 //        user.setAdminRole(adminRole);
 //        adminUserRepository.save(user);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
         return "home";
     }
 

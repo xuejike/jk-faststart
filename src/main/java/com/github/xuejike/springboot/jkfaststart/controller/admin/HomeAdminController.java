@@ -2,7 +2,10 @@ package com.github.xuejike.springboot.jkfaststart.controller.admin;
 
 import com.github.xuejike.springboot.jkfaststart.JkConfig;
 import lombok.extern.log4j.Log4j;
-import org.springframework.security.core.context.SecurityContextHolder;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +25,7 @@ public class HomeAdminController {
 
     @RequestMapping({"/","/index","/home"})
     public void home(){
-//        SecurityContextHolder.getContext().getAuthentication()
-//        return "index";
+
     }
     @RequestMapping("/qq")
     public void qq(){
@@ -33,17 +35,23 @@ public class HomeAdminController {
     public void login(){
 
     }
-    @RequestMapping(value = "/public/login-error")
-    public String loginError(HttpSession session){
-        Exception exception = (Exception) session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
+    @RequestMapping(value = "/public/login",method = RequestMethod.POST)
+    public void loginPost(String username,String pwd){
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, pwd);
+        subject.login(token);
 
-        log.error("error--",exception);
-        return "login";
+    }
+    @RequestMapping(value = "/public/logout")
+    public void loginError(HttpSession session){
+//        SecurityUtils.getSubject().logout();
+
+//        return "login";
     }
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public String error(Exception ex){
-
+        ex.printStackTrace();
         return "error";
     }
 }
