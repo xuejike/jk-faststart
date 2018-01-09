@@ -12,6 +12,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 public class UserRealm extends AuthorizingRealm {
@@ -24,6 +25,7 @@ public class UserRealm extends AuthorizingRealm {
      * @see 经测试：如果连续访问同一个URL（比如刷新），该方法不会被重复调用，Shiro有一个时间间隔（也就是cache时间，在ehcache-shiro.xml中配置），超过这个时间间隔再刷新页面，该方法会被执行
      */
     @Override
+    @Transactional
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         log.info("##################执行Shiro权限认证##################");
         //获取当前登录输入的用户名，等价于(String) principalCollection.fromRealm(getName()).iterator().next();
@@ -37,7 +39,7 @@ public class UserRealm extends AuthorizingRealm {
             info.addRole(user.getAdminRole().getName());
             //用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
             for (AdminPermission adminPermission : user.getAdminRole().getPermissionSet()) {
-                info.addStringPermission(adminPermission.getName());
+                info.addStringPermission(adminPermission.getUrl());
             }
 
 

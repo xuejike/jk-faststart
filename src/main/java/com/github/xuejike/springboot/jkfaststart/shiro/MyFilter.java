@@ -1,6 +1,9 @@
 package com.github.xuejike.springboot.jkfaststart.shiro;
 
+import org.apache.shiro.SecurityUtils;
+
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -17,7 +20,8 @@ public class MyFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("My Filter executed!!");
+
+//        SecurityUtils.getSubject().checkPermissions(((HttpServletRequest) servletRequest).getRequestURI());
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

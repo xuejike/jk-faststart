@@ -6,7 +6,9 @@ import com.github.xuejike.springboot.jkfaststart.domain.AdminUser;
 import com.github.xuejike.springboot.jkfaststart.repository.AdminPermissionRepository;
 import com.github.xuejike.springboot.jkfaststart.repository.AdminRoleRepository;
 import com.github.xuejike.springboot.jkfaststart.repository.AdminUserRepository;
+import org.apache.catalina.security.SecurityUtil;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -49,6 +51,7 @@ public class HomeController {
 //        adminUserRepository.save(user);
 //        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+
         return "home";
     }
 

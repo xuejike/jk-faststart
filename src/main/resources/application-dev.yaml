@@ -19,6 +19,7 @@ spring:
 shiro:
   realm-class: com.github.xuejike.springboot.jkfaststart.shiro.UserRealm
   login-url: /admin/public/login
+#  unauthorized-url: /403.html
   success-url: /admin/index
   sign-in:
     user-param: username
@@ -32,3 +33,4 @@ shiro:
       /admin/**: authc,myfilter
       /**: anon
   retry-max: 100
+
