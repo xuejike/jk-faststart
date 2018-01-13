@@ -53,8 +53,10 @@ public class AdminPermissionServiceImpl extends BaseServiceImpl<AdminPermission,
 
     @Override
     public List<Menu> getSubMenu(Long pid) {
-        Iterable<AdminPermission> all = adminPermissionRepository.findAll(QAdminPermission
-                .adminPermission.pid.eq(pid), QAdminPermission.adminPermission.sortIndex.asc());
+        Iterable<AdminPermission> all = adminPermissionRepository
+                .findAll(QAdminPermission
+                .adminPermission.pid.eq(pid),
+                        QAdminPermission.adminPermission.sortIndex.asc());
 
         ArrayList<Menu> menus = new ArrayList<>();
         all.forEach(q->{
@@ -74,7 +76,8 @@ public class AdminPermissionServiceImpl extends BaseServiceImpl<AdminPermission,
     @Override
     public List<AdminPermission> listShow() {
         ArrayList<AdminPermission> list = new ArrayList<>();
-        Iterable<AdminPermission> all = adminPermissionRepository.findAll(QAdminPermission.adminPermission.pid.isNull());
+        Iterable<AdminPermission> all = adminPermissionRepository.
+                findAll(QAdminPermission.adminPermission.pid.isNull());
 
         for (AdminPermission adminPermission : all) {
             list.add(adminPermission);

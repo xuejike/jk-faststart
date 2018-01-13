@@ -3,6 +3,7 @@ package com.github.xuejike.springboot.jkfaststart.service.impl;
 import com.bidanet.springmvc.demo.jkbuilder.JkVerifyUtils;
 import com.github.xuejike.springboot.jkfaststart.controller.admin.view.user.AddAdminUser;
 import com.github.xuejike.springboot.jkfaststart.domain.AdminUser;
+import com.github.xuejike.springboot.jkfaststart.domain.QAdminUser;
 import com.github.xuejike.springboot.jkfaststart.domain.type.Status;
 import com.github.xuejike.springboot.jkfaststart.repository.AdminUserRepository;
 import com.github.xuejike.springboot.jkfaststart.service.AdminUserService;
@@ -25,5 +26,7 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser,Long> implem
         adminUser.setDelete(false);
         adminUser.setStatus(Status.open);
         adminUserRepository.save(adminUser);
+
+
     }
 }

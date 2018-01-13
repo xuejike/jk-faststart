@@ -2,7 +2,9 @@ package com.github.xuejike.springboot.jkfaststart.controller.admin;
 
 import com.github.xuejike.springboot.jkfaststart.JkConfig;
 
+import com.github.xuejike.springboot.jkfaststart.common.QueryDslTool;
 import com.github.xuejike.springboot.jkfaststart.common.ShiroUtils;
+import com.github.xuejike.springboot.jkfaststart.domain.QAdminUser;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.shiro.SecurityUtils;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityManager;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 后台主页
@@ -30,7 +33,7 @@ import javax.servlet.http.HttpSession;
 @Log4j
 public class HomeAdminController {
     @Autowired
-    EntityManager entityManager;
+    QueryDslTool queryDslTool;
 
     @RequestMapping({"/","/index","/home"})
     public void home(Model model){
@@ -44,6 +47,9 @@ public class HomeAdminController {
         Subject subject = SecurityUtils.getSubject();
         String nickName = ShiroUtils.getLoginUser().getNickName();
         model.addAttribute("nickName",nickName);
+
+//        List fetch = queryDslTool.getQuery().from(QAdminUser.adminUser).fetch();
+
     }
     @RequestMapping("/kk")
     public void qq(){
