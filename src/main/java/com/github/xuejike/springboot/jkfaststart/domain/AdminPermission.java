@@ -1,10 +1,13 @@
 package com.github.xuejike.springboot.jkfaststart.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.xuejike.springboot.jkfaststart.domain.type.PermissionType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "sys_admin_permission")
 @Data
@@ -18,9 +21,16 @@ public class AdminPermission {
 
     private Long pid;
     private String url;
+    private String icon;
     private String method;
     @Enumerated(value = EnumType.STRING)
     private PermissionType type;
+    private Integer sortIndex;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "pid")
+    @JSONField(serialize = false)
+    @JsonIgnore
+    private List<AdminPermission> subMenu;
 
 
     public AdminPermission(Long id) {

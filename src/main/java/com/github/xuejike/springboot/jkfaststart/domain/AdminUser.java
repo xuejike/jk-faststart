@@ -3,7 +3,9 @@ package com.github.xuejike.springboot.jkfaststart.domain;
 import com.github.xuejike.springboot.jkfaststart.domain.type.Status;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -46,11 +48,13 @@ public class AdminUser {
      * 创建时间
      */
     @CreationTimestamp
-    private Timestamp createTime;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime  createTime;
 
     /**
      * 修改时间
      */
     @UpdateTimestamp
-    private Timestamp updateTime;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime updateTime;
 }

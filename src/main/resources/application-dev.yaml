@@ -10,6 +10,11 @@ spring:
       ddl-auto: update
     open-in-view: true
     database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+    properties:
+      jadira:
+        usertype:
+          autoRegisterUserTypes: true
   freemarker:
     allow-request-override: true
     allow-session-override: true

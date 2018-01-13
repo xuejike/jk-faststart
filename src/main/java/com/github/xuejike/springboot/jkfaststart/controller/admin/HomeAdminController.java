@@ -1,23 +1,24 @@
 package com.github.xuejike.springboot.jkfaststart.controller.admin;
 
 import com.github.xuejike.springboot.jkfaststart.JkConfig;
-import com.github.xuejike.springboot.jkfaststart.domain.QAdminPermission;
-import com.github.xuejike.springboot.jkfaststart.domain.QAdminUser;
-import com.mysema.query.jpa.impl.JPAQuery;
+
+import com.github.xuejike.springboot.jkfaststart.common.ShiroUtils;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -32,14 +33,17 @@ public class HomeAdminController {
     EntityManager entityManager;
 
     @RequestMapping({"/","/index","/home"})
-    public void home(){
-        QAdminUser adminUser = QAdminUser.adminUser;
-        JPAQuery jpaQuery = new JPAQuery(entityManager);
-        jpaQuery.from(adminUser)
-                .where(adminUser.nickName.like("sss")
-                        .and(adminUser.roleId.eq(1L))
-                        .or(adminUser.delete.eq(false)));
-
+    public void home(Model model){
+//        QAdminUser adminUser = QAdminUser.adminUser;
+//        JPAQuery jpaQuery = new JPAQuery(entityManager);
+//        jpaQuery.from(adminUser)
+//                .where(adminUser.nickName.like("sss")
+//                        .and(adminUser.roleId.eq(1L))
+//                        .or(adminUser.delete.eq(false)));
+//        PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+        Subject subject = SecurityUtils.getSubject();
+        String nickName = ShiroUtils.getLoginUser().getNickName();
+        model.addAttribute("nickName",nickName);
     }
     @RequestMapping("/kk")
     public void qq(){
@@ -51,18 +55,32 @@ public class HomeAdminController {
 
     }
     @RequestMapping(value = "/public/login",method = RequestMethod.POST)
-    public void loginPost(String username,String pwd){
+    public void loginPost(@ModelAttribute("username") String username,
+                            @ModelAttribute("pwd")String pwd, Model model,
+                            ServletRequest request){
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, pwd);
-        subject.login(token);
-        JPAQuery jpaQuery = new JPAQuery();
+        try {
+//            WebUtils.getSavedRequest()
+
+            subject.login(token);
+
+
+        }catch (Exception ex){
+            model.addAttribute("msg",ex.getMessage());
+//            ex.printStackTrace();
+        }
+
+
+//        JPAQuery jpaQuery = new JPAQuery();
 
 
     }
     @RequestMapping(value = "/public/logout")
-    public void loginError(HttpSession session){
+    public String loginError(HttpSession session){
         SecurityUtils.getSubject().logout();
-        Session session1 = SecurityUtils.getSubject().getSession();
+        return "redirect:../index";
+//        Session session1 = SecurityUtils.getSubject().getSession();
 
 //        return "login";
     }

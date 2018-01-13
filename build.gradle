@@ -2,12 +2,15 @@ buildscript {
 	ext {
 		springBootVersion = '1.5.9.RELEASE'
 	}
+	ext.kotlin_version = '1.2.10'
+
 	repositories {
 		mavenCentral()
 
 		maven { url 'https://jitpack.io' }
 	}
 	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
 }
@@ -16,9 +19,22 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'idea'
+
+apply plugin: 'kotlin'
+
+
+//
+//sourceSets {
+//	generated {
+//		java {
+//			srcDir "$projectDir/generated/java"
+//		}
+//	}
+//}
+//
 idea {
 	module {
-		sourceDirs += file('generated/')
+		sourceDirs += file('generated/generated')
 	}
 }
 group = 'com.github.xuejike.springboot'
@@ -28,9 +44,16 @@ sourceCompatibility = 1.8
 repositories {
 	mavenCentral()
 	maven { url 'https://jitpack.io' }
+	jcenter()
+
 }
 
-
+compileKotlin {
+	kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+	kotlinOptions.jvmTarget = "1.8"
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-aop')
@@ -53,9 +76,19 @@ dependencies {
 	compile 'org.jeecg:easypoi-base:2.1.5'
 	compile 'org.jeecg:easypoi-web:2.1.5'
 	compile 'org.jeecg:easypoi-annotation:2.1.5'
-	compile "com.mysema.querydsl:querydsl-jpa:3.6.3"
 
-	compile "com.mysema.querydsl:querydsl-apt:3.6.3:jpa" // Magic happens here
+	compile group: 'com.github.xuejike', name: 'bd_framework_core', version:'v0.1.5.9_starter'
+
+	compile 'com.querydsl:querydsl-jpa:4.1.4'
+	compile 'com.querydsl:querydsl-apt:4.1.4:jpa'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
+    compile 'com.github.xuejike:spring_xuejike_tpl:68487db03c'
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+	//Fill this in with the version of kotlinx in use in your project
+    compile 'com.github.xuejike:hibernate-lambda-query:aa3240ab9e'
+	compile 'joda-time:joda-time:2.9.9'
+	// include for server side
+	compile "org.jetbrains.kotlinx:kotlinx-html-jvm:0.6.6"
+	compile 'org.jadira.usertype:usertype.core:3.1.0.CR1'
 }
