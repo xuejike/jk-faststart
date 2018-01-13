@@ -10,4 +10,5 @@ public interface AdminPermissionService extends BaseService<AdminPermission,Long
     List<Menu> getRootMenuTree();
 
     List<Menu> getSubMenu(Long pid);
+    List<AdminPermission> listShow();
 }

@@ -13,10 +13,10 @@ import lombok.Data;
         @JkButton(value = "新增菜单",type = JkButtonType.dialog,url = "/admin/menu/add")
 })
 public class AdminPermissionHeader {
-    @JkTitle("菜单名称")
-    @JkTextFormField
-    private String name;
-    @JkTitle("菜单地址")
-    @JkTextFormField
-    private String url;
+//    @JkTitle("菜单名称")
+//    @JkTextFormField
+//    private String name;
+//    @JkTitle("菜单地址")
+//    @JkTextFormField
+//    private String url;
 }

@@ -32,7 +32,6 @@ public class AdminPermission {
     @JsonIgnore
     private List<AdminPermission> subMenu;
 
-
     public AdminPermission(Long id) {
         this.id = id;
     }

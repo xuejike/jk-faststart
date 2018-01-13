@@ -30,7 +30,7 @@ public class MenuDataSource implements JkTypeDataSource {
             data.add(new JkNameValueDataImpl(adminPermission.getName(),adminPermission.getId().toString()));
             if (adminPermission.getSubMenu().size()>0){
                 for (AdminPermission permission : adminPermission.getSubMenu()) {
-                    data.add(new JkNameValueDataImpl("-->"+permission.getName(),permission.getId().toString()));
+                    data.add(new JkNameValueDataImpl("|--"+permission.getName(),permission.getId().toString()));
                 }
 
             }

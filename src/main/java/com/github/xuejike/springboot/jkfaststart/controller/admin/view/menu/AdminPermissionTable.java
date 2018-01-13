@@ -23,9 +23,6 @@ public class AdminPermissionTable {
     @JkColumn(title = "菜单描述")
     private String description;
 
-    @JkColumn(title = "父菜单")
-    private Long pid;
-
     @JkColumn(title = "菜单地址")
     private String url;
 

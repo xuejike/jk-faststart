@@ -15,5 +15,9 @@
 ${content!}
 
 <script type="text/javascript" src="/jkBuilderInit.js"></script>
+
+<script type="text/html" id="diy">
+    <input type="file"/>
+</script>
 </body>
 </html>

@@ -71,6 +71,27 @@ public class AdminPermissionServiceImpl extends BaseServiceImpl<AdminPermission,
         return menus;
     }
 
+    @Override
+    public List<AdminPermission> listShow() {
+        ArrayList<AdminPermission> list = new ArrayList<>();
+        Iterable<AdminPermission> all = adminPermissionRepository.findAll(QAdminPermission.adminPermission.pid.isNull());
+
+        for (AdminPermission adminPermission : all) {
+            list.add(adminPermission);
+            for (AdminPermission permission : adminPermission.getSubMenu()) {
+                permission.setName("|--"+permission.getName());
+                list.add(permission);
+                for (AdminPermission end : permission.getSubMenu()) {
+                    end.setName("&nbsp;&nbsp;&nbsp;&nbsp;|---"+end.getName());
+                    list.add(end);
+                }
+
+            }
+
+        }
+        return list;
+    }
+
     private Menu createMenu(AdminPermission q) {
         Menu menu = new Menu();
         menu.setId(q.getId());
@@ -80,4 +101,5 @@ public class AdminPermissionServiceImpl extends BaseServiceImpl<AdminPermission,
         menu.setPid(q.getPid());
         return menu;
     }
+
 }

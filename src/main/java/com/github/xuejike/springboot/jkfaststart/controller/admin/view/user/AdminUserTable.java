@@ -1,7 +1,7 @@
 package com.github.xuejike.springboot.jkfaststart.controller.admin.view.user;
 
-import com.bidanet.springmvc.demo.jkbuilder.annotation.JkColumn;
-import com.bidanet.springmvc.demo.jkbuilder.annotation.JkTable;
+import com.bidanet.springmvc.demo.jkbuilder.annotation.*;
+import com.bidanet.springmvc.demo.jkbuilder.annotation.type.JkButtonType;
 import com.github.xuejike.springboot.jkfaststart.domain.AdminRole;
 import com.github.xuejike.springboot.jkfaststart.domain.type.Status;
 import lombok.Data;
@@ -18,6 +18,7 @@ import lombok.Setter;
  */
 @Data
 @JkTable
+@JkDataSource(url = "./data")
 public class AdminUserTable {
 
   
@@ -30,20 +31,25 @@ public class AdminUserTable {
     @JkColumn(title = "昵称")
     private String nickName;
 
-    @JkColumn(title = "昵称")
-    private Status status;
+    @JkColumn(title = "状态")
+    private String status;
 
-  
+    @JkColumn(title = "角色")
     private String role;
 
 
-    private Boolean delete;
+//    private Boolean delete;
 
-  
+    @JkColumn(title = "注册时间")
     private String createTime;
 
-  
+    @JkColumn(title = "修改时间")
     private String updateTime;
 
+    @JkColumn(title = "操作")
+    @JkToolBar(btns = {
+            @JkButton(value = "编辑",type = JkButtonType.dialog,url = "/admin/user/edit?id={id}")
+    })
+    private String tool;
 
 }

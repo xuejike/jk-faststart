@@ -14,6 +14,7 @@ import com.github.xuejike.springboot.jkfaststart.controller.admin.view.menu.Admi
 import com.github.xuejike.springboot.jkfaststart.domain.AdminPermission;
 import com.github.xuejike.springboot.jkfaststart.service.AdminPermissionService;
 import com.github.xuejike.springboot.jkfaststart.vo.Menu;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -50,7 +52,9 @@ public class MenuController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public AjaxCallBack addSave(AddAdminPermission addAdminPermission,Model model){
-
+        AdminPermission save=new AdminPermission();
+        BeanUtils.copyProperties(addAdminPermission,save);
+        adminPermissionService.save(save);
         return AjaxCallBack.saveSuccess();
     }
 
@@ -64,10 +68,10 @@ public class MenuController {
     @ResponseBody
     public AjaxPage<AdminPermission> data(AdminPermission query, Page<AdminPermission> page){
 
-        adminPermissionService.eqPage(query,page);
-//        page.getList().addAll(page.getList());
-//        page.getList().addAll(page.getList());
-//        page.getList().addAll(page.getList());
+
+        List<AdminPermission> list = adminPermissionService.listShow();
+        page.setList(list);
+
         return AjaxPage.success(page);
     }
 }

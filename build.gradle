@@ -86,9 +86,19 @@ dependencies {
     compile 'com.github.xuejike:spring_xuejike_tpl:68487db03c'
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 	//Fill this in with the version of kotlinx in use in your project
-    compile 'com.github.xuejike:hibernate-lambda-query:aa3240ab9e'
+    compile ('com.github.xuejike:hibernate-lambda-query:aa3240ab9e')
+			{
+				exclude(module:"hibernate-core")
+			}
 	compile 'joda-time:joda-time:2.9.9'
 	// include for server side
 	compile "org.jetbrains.kotlinx:kotlinx-html-jvm:0.6.6"
-	compile 'org.jadira.usertype:usertype.core:3.1.0.CR1'
+	compile ('org.jadira.usertype:usertype.core:5.0.0.GA'){
+        exclude(module:"hibernate-entitymanager")
+//        transitive = true
+//        exclude "org.hibernate:hibernate-entitymanager "
+//        exclude group "org.hibernate" module "hibernate-entitymanager"
+//        org.hibernate:hibernate-entitymanager:5.0.12.Final
+}
+	compile 'xml-apis:xml-apis:1.4.01'
 }
