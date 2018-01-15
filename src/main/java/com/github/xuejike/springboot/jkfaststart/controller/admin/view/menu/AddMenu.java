@@ -27,7 +27,7 @@ import lombok.Setter;
 @JkForm(url = "/admin/menu/add",btns = {
         @JkButton(type = JkButtonType.submit,value = "保存")
 })
-public class AddAdminPermission {
+public class AddMenu {
     @JkSelectFormField
     @JkDataSource(type = JkSourceType.beanClass,beanCls = MenuDataSource.class)
     @JkTitle("父菜单")
@@ -56,6 +56,7 @@ public class AddAdminPermission {
     private PermissionType type;
 
     @JkTitle("菜单排序")
+    @JkTextFormField
     private Integer sortIndex;
 
 

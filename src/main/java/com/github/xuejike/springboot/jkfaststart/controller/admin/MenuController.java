@@ -8,9 +8,10 @@ import com.bidanet.springmvc.demo.jkbuilder.JkTableBuilder;
 import com.github.xuejike.kotlin.views.MenuKt;
 import com.github.xuejike.springboot.jkfaststart.JkConfig;
 import com.github.xuejike.springboot.jkfaststart.common.AjaxPage;
-import com.github.xuejike.springboot.jkfaststart.controller.admin.view.menu.AddAdminPermission;
-import com.github.xuejike.springboot.jkfaststart.controller.admin.view.menu.AdminPermissionHeader;
-import com.github.xuejike.springboot.jkfaststart.controller.admin.view.menu.AdminPermissionTable;
+import com.github.xuejike.springboot.jkfaststart.controller.admin.view.menu.AddMenu;
+import com.github.xuejike.springboot.jkfaststart.controller.admin.view.menu.HeaderMenu;
+import com.github.xuejike.springboot.jkfaststart.controller.admin.view.menu.TableMenu;
+import com.github.xuejike.springboot.jkfaststart.controller.admin.view.menu.UpdateMenu;
 import com.github.xuejike.springboot.jkfaststart.domain.AdminPermission;
 import com.github.xuejike.springboot.jkfaststart.service.AdminPermissionService;
 import com.github.xuejike.springboot.jkfaststart.vo.Menu;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -41,23 +41,38 @@ public class MenuController {
     public String index(Model model){
         String table = MenuKt.table();
         model.addAttribute("content",table);
-        return JkTableBuilder.create(AdminPermissionTable.class).addHeaderTool(new AdminPermissionHeader()).build(model);
+        return JkTableBuilder.create(TableMenu.class).addHeaderTool(new HeaderMenu()).build(model);
     }
 
     @RequestMapping(value = "/add",method = RequestMethod.GET)
-    public String add(AddAdminPermission addAdminPermission,Model model){
-        return JkFormBuilder.create(addAdminPermission).build(model);
+    public String add(AddMenu addMenu, Model model){
+        return JkFormBuilder.create(addMenu).build(model);
     }
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public AjaxCallBack addSave(AddAdminPermission addAdminPermission,Model model){
+    public AjaxCallBack addSave(AddMenu addAdminPermission, Model model){
         AdminPermission save=new AdminPermission();
         BeanUtils.copyProperties(addAdminPermission,save);
         adminPermissionService.save(save);
         return AjaxCallBack.saveSuccess();
     }
 
+    @RequestMapping("/edit")
+    public String edit(Long id,Model model){
+        AdminPermission adminPermission = adminPermissionService.get(id);
+        AddMenu addMenu = new AddMenu();
+        BeanUtils.copyProperties(adminPermission,addMenu);
+        return JkFormBuilder.create(addMenu)
+                .addForm(new UpdateMenu(adminPermission.getId())).setActionUrl("./edit_save").build(model);
+    }
+    @RequestMapping("/edit_save")
+    @ResponseBody
+    public AjaxCallBack editSave(Long id,AddMenu addMenu){
+
+        adminPermissionService.update(id,addMenu);
+        return AjaxCallBack.saveSuccess();
+    }
 
     @RequestMapping("/top-menu")
     @ResponseBody

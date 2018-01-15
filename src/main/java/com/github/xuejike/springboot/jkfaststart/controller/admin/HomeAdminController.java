@@ -37,19 +37,9 @@ public class HomeAdminController {
 
     @RequestMapping({"/","/index","/home"})
     public void home(Model model){
-//        QAdminUser adminUser = QAdminUser.adminUser;
-//        JPAQuery jpaQuery = new JPAQuery(entityManager);
-//        jpaQuery.from(adminUser)
-//                .where(adminUser.nickName.like("sss")
-//                        .and(adminUser.roleId.eq(1L))
-//                        .or(adminUser.delete.eq(false)));
-//        PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
         Subject subject = SecurityUtils.getSubject();
         String nickName = ShiroUtils.getLoginUser().getNickName();
         model.addAttribute("nickName",nickName);
-
-//        List fetch = queryDslTool.getQuery().from(QAdminUser.adminUser).fetch();
-
     }
     @RequestMapping("/kk")
     public void qq(){

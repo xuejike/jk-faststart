@@ -9,10 +9,10 @@ import lombok.Data;
 
 @Data
 @JkForm(btns = {
-        @JkButton(type = JkButtonType.submit,value = "搜索"),
+        @JkButton(type = JkButtonType.submit,value = "刷新"),
         @JkButton(value = "新增菜单",type = JkButtonType.dialog,url = "/admin/menu/add")
 })
-public class AdminPermissionHeader {
+public class HeaderMenu {
 //    @JkTitle("菜单名称")
 //    @JkTextFormField
 //    private String name;

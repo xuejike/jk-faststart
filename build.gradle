@@ -83,7 +83,7 @@ dependencies {
 	compile 'com.querydsl:querydsl-apt:4.1.4:jpa'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
-    compile 'com.github.xuejike:spring_xuejike_tpl:68487db03c'
+    compile 'com.github.xuejike:spring_xuejike_tpl:0.1'
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 	//Fill this in with the version of kotlinx in use in your project
     compile ('com.github.xuejike:hibernate-lambda-query:aa3240ab9e')
