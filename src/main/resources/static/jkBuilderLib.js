@@ -22,7 +22,7 @@ function openUrlDialog(href,option) {
 }
 function openTab(href, title) {
     layui.use(["vip_tab"],function () {
-        layui.vip_tab.add(null,title,href);
+        layui.vip_tab.add(this,title,href);
     })
 }
 
@@ -67,7 +67,7 @@ function ajaxDataHandle(res) {
     }else if(res.statusCode == jkBuilderConfig.status.error){
         getLayer().msg(res.message)
     }else if(res.statusCode == jkBuilderConfig.status.timeout){
-        getLayer().msg("请重新登陆")
+        getLayer().msg("请求超时")
     }else{
 
     }
@@ -98,7 +98,10 @@ function ajaxActionHandle(res) {
     if(ifs.length>0){
         if(ifs[0].contentWindow.reloadContent){
             ifs[0].contentWindow.reloadContent();
+        }else{
+            ifs[0].contentWindow.location.reload(true)
         }
+
     }
 
     //
@@ -111,6 +114,50 @@ function getLayer() {
     }
 }
 // event  action@url@option
+function btnEvent(event) {
+
+    var tagIndex= event.indexOf("@");
+    if(tagIndex>=0){
+        var eventArgs= event.split("@");
+        var action= eventArgs[0];
+        var option="";
+        var url=eventArgs[1];
+
+
+        if(eventArgs.length>=3){
+            eval("option="+eventArgs[2])
+        }
+        switch (action){
+            case "tab":
+                openTab(url,option["title"]);
+                return;
+            case "dialog":
+                openUrlDialog(url,option);
+                return;
+            case "doAjax":
+                ajaxPost(url,{});
+                return;
+            case "windows":
+                window.open(url);
+                return;
+            case "confirm":
+                getLayer().confirm(option, {icon: 3, title:'提示'}, function(index){
+                    //do something
+                    ajaxPost(url,{});
+                    layer.close(index);
+                });
+                return;
+            default:
+
+        }
+    }
+
+    if(jkBuilderConfig.event[event]){
+        jkBuilderConfig.event[event](event);
+    }else{
+        console.log("没有处理方法:"+event);
+    }
+}
 function tableToolAction(event, data,row) {
 
     var tagIndex= event.indexOf("@");
@@ -276,3 +323,65 @@ function uploadComponent(subId,url,max,data,type,exts) {
         upload.render(obj);
     });
 };
+
+function initDateInput(id) {
+    layui.use(['laydate',"jquery"], function(){
+        var laydate = layui.laydate;
+
+
+        var config=getLayuiDomConfig(id);
+        config["elem"]=id;
+        //执行一个laydate实例
+        laydate.render(config);
+    });
+}
+function initPage(id) {
+    layui.use(['laypage',"jquery"], function(){
+        var laypage = layui.laypage;
+        var config=getLayuiDomConfig("#"+id);
+        config["elem"]=id;
+        //执行一个laypage实例
+        if(!config["jump"]){
+            config["jump"]=function (obj, first) {
+                if(!first){
+                    var params=getQueryString();
+                    params["pageNo"]=obj.curr;
+                    params["pageSize"]=obj.limit;
+                    var url=window.location.pathname+"?";
+                    for(var k in params){
+                        url+=k+"="+params[k]+"&"
+                    }
+                    window.location.href=url;
+
+                }
+            }
+        }
+        laypage.render(config);
+    });
+}
+function getLayuiDomConfig(id) {
+    var date=layui.$(id);
+    var ext=date.attr("lay-data");
+    var config={};
+    if(ext!=undefined&&ext!=""){
+        config=layui.$.parseJSON(ext);
+    }
+    return config;
+}
+function getQueryString() {
+    var qs = location.search.substr(1), // 获取url中"?"符后的字串
+        args = {}, // 保存参数数据的对象
+        items = qs.length ? qs.split("&") : [], // 取得每一个参数项,
+        item = null,
+        len = items.length;
+
+    for(var i = 0; i < len; i++) {
+        item = items[i].split("=");
+        var name = decodeURIComponent(item[0]),
+            value = decodeURIComponent(item[1]);
+        if(name) {
+            args[name] = value;
+        }
+    }
+    return args;
+}

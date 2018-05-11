@@ -20,7 +20,7 @@
         </div>
 
         <!-- 顶部左侧添加选项卡监听 -->
-        <ul class="layui-nav" lay-filter="side-top-left">
+        <ul class="layui-nav" lay-filter="side-top-left" id="mainTopMenu">
             <!--<li class="layui-nav-item"><a href="javascript:;" href-url="demo/btn.html"><i class="layui-icon">&#xe621;</i>按钮</a></li>
             <li class="layui-nav-item">
                 <a href="javascript:;"><i class="layui-icon">&#xe621;</i>基础</a>
@@ -129,7 +129,7 @@
 
 <script type="text/javascript" src="/vip/frame/static/js/vip_comm.js"></script>
 <script type="text/javascript">
-layui.use(['layer','vip_nav'], function () {
+layui.use(['layer','vip_nav',"element"], function () {
 
     // 操作对象
     var layer       = layui.layer
@@ -141,6 +141,11 @@ layui.use(['layer','vip_nav'], function () {
     // 主体菜单生成 [请求地址,过滤ID,是否展开,携带参数]
     vipNav.main('./menu/left-menu?pid=1','side-main',true);
 
+
+    //
+    // layui.element.on('nav(side-top-left)', function(elem){
+    //     console.log(elem); //得到当前点击的DOM对象
+    // });
     // you code ...
 
 

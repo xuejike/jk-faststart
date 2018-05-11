@@ -14,16 +14,16 @@ public class SysConfig {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
     @Column(name = "_key")
-    private String key;
+    public String key;
     @Type(type = "text")
     @Column(name = "_val")
-    private String val;
+    public String val;
     @Column(name = "_describe")
-    private String describe;
+    public String describe;
     @CreationDateTime
-    private DateTime createTime;
+    public DateTime createTime;
     @UpdateDateTime
-    private DateTime updateTime;
+    public DateTime updateTime;
 }

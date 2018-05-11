@@ -10,15 +10,15 @@ import java.util.Set;
 public class AdminRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String info;
+    public Long id;
+    public String name;
+    public String info;
 
     @Column(name = "_delete")
     private Boolean delete;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private Set<AdminPermission> permissionSet;
+    @ManyToMany(fetch = FetchType.LAZY)
+    public Set<AdminPermission> permissionSet;
 
 
 }

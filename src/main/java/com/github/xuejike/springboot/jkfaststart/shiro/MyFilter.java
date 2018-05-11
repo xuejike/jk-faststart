@@ -22,6 +22,7 @@ public class MyFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
 
 //        SecurityUtils.getSubject().checkPermissions(((HttpServletRequest) servletRequest).getRequestURI());
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

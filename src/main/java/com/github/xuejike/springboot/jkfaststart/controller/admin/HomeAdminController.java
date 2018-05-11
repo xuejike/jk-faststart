@@ -4,9 +4,11 @@ import com.github.xuejike.springboot.jkfaststart.JkConfig;
 
 import com.github.xuejike.springboot.jkfaststart.common.QueryDslTool;
 import com.github.xuejike.springboot.jkfaststart.common.ShiroUtils;
+import com.github.xuejike.springboot.jkfaststart.domain.AdminUser;
 import com.github.xuejike.springboot.jkfaststart.domain.QAdminUser;
-import lombok.extern.log4j.Log4j;
+import com.github.xuejike.springboot.jkfaststart.repository.AdminUserRepository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -30,14 +32,17 @@ import java.util.List;
  */
 @RequestMapping(JkConfig.ADMIN_PATH)
 @Controller
-@Log4j
+@Slf4j
 public class HomeAdminController {
     @Autowired
     QueryDslTool queryDslTool;
 
+    @Autowired
+    AdminUserRepository adminUserRepository;
     @RequestMapping({"/","/index","/home"})
-    public void home(Model model){
+    public void home(Model model,String cc){
         Subject subject = SecurityUtils.getSubject();
+
         String nickName = ShiroUtils.getLoginUser().getNickName();
         model.addAttribute("nickName",nickName);
     }

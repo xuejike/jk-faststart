@@ -12,6 +12,8 @@ import com.github.xuejike.springboot.jkfaststart.controller.admin.view.config.He
 import com.github.xuejike.springboot.jkfaststart.controller.admin.view.config.TableSysConfig;
 import com.github.xuejike.springboot.jkfaststart.domain.SysConfig;
 import com.github.xuejike.springboot.jkfaststart.service.SysConfigService;
+import com.github.xuejike.springboot.jkfaststart.views.admin.ConfigEditView;
+import com.github.xuejike.springboot.jkfaststart.views.admin.ConfigListView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,16 +30,27 @@ public class SysConfigController {
     SysConfigService sysConfigService;
 
     @RequestMapping("/index")
-    public String index(Model model){
-
-        return JkTableBuilder.
-                create(com.github.xuejike.kotlin.views.TableSysConfig.class).addHeaderTool(new HeaderSysConfig()).setHeightFull().build(model);
+    @ResponseBody
+    public String index(Model model,SysConfig query,Page<SysConfig> page){
+        sysConfigService.eqPage(query,page);
+        ConfigListView view = new ConfigListView(page,query);
+        return view.toHtml();
+//        return JkTableBuilder.
+//                create(com.github.xuejike.kotlin.views.TableSysConfig.class)
+//                .addHeaderTool(new HeaderSysConfig()).setHeightFull().build(model);
     }
     @RequestMapping("/add")
     public String add(Model model, AddSysConfig addSysConfig){
         return JkFormBuilder.create(new AddSysConfigKt()).build(model);
     }
-    @RequestMapping("/add_save")
+    @RequestMapping("/edit")
+    @ResponseBody
+    public String edit(Long id){
+        SysConfig sysConfig = sysConfigService.get(id);
+        ConfigEditView view = new ConfigEditView(sysConfig);
+        return view.toHtml();
+    }
+    @RequestMapping("/editSave")
     @ResponseBody
     public AjaxCallBack addSave(SysConfig sysConfig){
         sysConfigService.save(sysConfig);

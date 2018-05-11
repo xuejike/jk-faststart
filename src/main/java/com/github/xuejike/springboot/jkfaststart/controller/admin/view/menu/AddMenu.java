@@ -28,36 +28,37 @@ import lombok.Setter;
         @JkButton(type = JkButtonType.submit,value = "保存")
 })
 public class AddMenu {
+    public Long id;
     @JkSelectFormField
     @JkDataSource(type = JkSourceType.beanClass,beanCls = MenuDataSource.class)
     @JkTitle("父菜单")
-    private Long pid;
+    public Long pid;
 
     @JkTextFormField
     @JkTitle("菜单名称")
-    private String name;
+    public String name;
 
     @JkTextAreaFormField
     @JkTitle("菜单描述")
-    private String description;
+    public String description;
 
     @JkTextFormField
     @JkTitle("菜单地址")
-    private String url;
+    public String url;
     @JkTextFormField
     @JkTitle("菜单图标")
-    private String icon;
+    public String icon;
 
-  
-    private String method;
+
+    public String method;
     @JkSelectFormField
     @JkDataSource(type = JkSourceType.enumType)
     @JkTitle("菜单类型")
-    private PermissionType type;
+    public PermissionType type;
 
     @JkTitle("菜单排序")
     @JkTextFormField
-    private Integer sortIndex;
+    public Integer sortIndex;
 
 
 

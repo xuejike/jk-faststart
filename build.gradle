@@ -1,6 +1,7 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.9.RELEASE'
+//		springBootVersion = '2.0.2.RELEASE'
 	}
 	ext.kotlin_version = '1.2.10'
 
@@ -10,14 +11,16 @@ buildscript {
 		maven { url 'https://jitpack.io' }
 	}
 	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+//apply plugin: 'io.spring.dependency-management'
 apply plugin: 'idea'
 
 apply plugin: 'kotlin'
@@ -36,10 +39,12 @@ idea {
 	module {
 		sourceDirs += file('generated/generated')
 	}
+
 }
 group = 'com.github.xuejike.springboot'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
 
 repositories {
 	mavenCentral()
@@ -49,6 +54,7 @@ repositories {
 }
 
 compileKotlin {
+
 	kotlinOptions.jvmTarget = "1.8"
 }
 compileTestKotlin {
@@ -56,8 +62,9 @@ compileTestKotlin {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-aop')
+
 	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-freemarker')
 	compile('org.springframework.boot:spring-boot-starter-mail')
@@ -83,7 +90,8 @@ dependencies {
 	compile 'com.querydsl:querydsl-apt:4.1.4:jpa'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
-    compile 'com.github.xuejike:spring_xuejike_tpl:0.1'
+	compile 'com.github.xuejike:spring_xuejike_tpl:57c5850'
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.2.40'
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 	//Fill this in with the version of kotlinx in use in your project
     compile ('com.github.xuejike:hibernate-lambda-query:aa3240ab9e')

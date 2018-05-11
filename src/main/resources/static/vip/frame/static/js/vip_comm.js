@@ -103,6 +103,9 @@ layui.use(['layer', 'element', 'util','vip_nav'], function () {
     element.on('nav(side-top-left)', function (elem) {
         // 添加tab方法
         // window.addTab(elem);
+        var sbLi= layui.$(elem).parent().children();
+        sbLi.removeClass("jk-menu-selected");
+        layui.$(elem).addClass("jk-menu-selected");
         console.log(elem);
         vipNav.main(elem.children('a').attr('href-url'),'side-main',true);
     });

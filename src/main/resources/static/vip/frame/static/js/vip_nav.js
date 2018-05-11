@@ -53,12 +53,18 @@ layui.define(['layer', 'element'], function (exports) {
         // 左侧主体菜单 [请求地址,过滤ID,是否展开,携带参数]
         , main: function (addr, obj, treeStatus, data) {
             // 添加HTML
+            //添加选中背景
+
             this.addHtml(addr, obj, treeStatus, data);
         }
         // 顶部左侧菜单 [请求地址,过滤ID,是否展开,携带参数]
         , top_left: function (addr, obj, treeStatus, data) {
             // 添加HTML
+
             this.addHtml(addr, obj, treeStatus, data);
+            setTimeout(100,function () {
+                layui.$("#mainTopMenu").children()[0].click();
+            })
         }
         /*// 顶部右侧菜单
          ,top_right: function(){

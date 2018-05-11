@@ -32,8 +32,10 @@ public class TableSysConfig {
     private String describe;
      @JkColumn(title = "操作")
      @JkToolBar(btns = {
-             @JkButton(value = "编辑",type = JkButtonType.dialog,url = "./edit?id={id}"),
-             @JkButton(value = "删除",type = JkButtonType.confirm,url = "./del?id={id}",option = "'是否确认删除该配置？'")
+             @JkButton(value = "编辑",type = JkButtonType.dialog
+                     ,url = "./config/edit?id={id}"),
+             @JkButton(value = "删除"
+                     ,type = JkButtonType.confirm,url = "./del?id={id}",option = "'是否确认删除该配置？'")
      })
      private String tool;
 }

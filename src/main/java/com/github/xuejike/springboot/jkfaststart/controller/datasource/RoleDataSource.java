@@ -24,7 +24,7 @@ public class RoleDataSource implements JkTypeDataSource {
     @Override
     public String getText(String val) {
         if (val!=null){
-            return adminRoleRepository.findOne(Long.parseLong(val)).getName();
+            return adminRoleRepository.getOne(Long.parseLong(val)).getName();
         }
         return null;
     }
