@@ -1,11 +1,13 @@
 package com.github.xuejike.springboot.jkfaststart.service.impl;
 
 
+import com.bidanet.bdcms.core.common.SpringWebTool;
 import com.bidanet.springmvc.demo.jkbuilder.data.JkNameValueData;
 import com.bidanet.springmvc.demo.jkbuilder.data.JkNameValueDataImpl;
 import com.github.xuejike.springboot.jkfaststart.JkConfig;
 import com.github.xuejike.springboot.jkfaststart.domain.AdminPermission;
 import com.github.xuejike.springboot.jkfaststart.domain.AdminRole;
+import com.github.xuejike.springboot.jkfaststart.domain.AdminUser;
 import com.github.xuejike.springboot.jkfaststart.domain.QAdminPermission;
 import com.github.xuejike.springboot.jkfaststart.repository.AdminPermissionRepository;
 import com.github.xuejike.springboot.jkfaststart.repository.AdminRoleRepository;
@@ -41,7 +43,7 @@ public class AdminPermissionServiceImpl extends BaseServiceImpl<AdminPermission,
                 .findAll(adminPermission.pid.isNull()
                 , adminPermission.sortIndex.asc());
         ArrayList<Long> permissionIds=new ArrayList<>(1);
-        if (roleId!=0){
+        if (roleId!=ROOT_ADMIN_ROLE_ID){
             AdminRole roleInfo = adminRoleRepository.getOne(roleId);
             Set<AdminPermission> permissionSet = roleInfo.getPermissionSet();
             permissionIds = new ArrayList<>(permissionSet.size());
@@ -52,7 +54,7 @@ public class AdminPermissionServiceImpl extends BaseServiceImpl<AdminPermission,
         ArrayList<Long> finalPermissionIds1 = permissionIds;
         rootMenu.forEach(m->{
             Long id = m.getId();
-            if (finalPermissionIds1.contains(id)||roleId==0){
+            if (finalPermissionIds1.contains(id)||roleId==ROOT_ADMIN_ROLE_ID){
                 Menu menu = new Menu();
                 menu.setText(m.getName());
                 menu.setId(id);
@@ -71,7 +73,7 @@ public class AdminPermissionServiceImpl extends BaseServiceImpl<AdminPermission,
     @Override
     public List<Menu> getSubMenu(Long pid, Long roleId) {
         BooleanExpression eq = QAdminPermission.adminPermission.pid.eq(pid);
-        if (roleId!=0){
+        if (roleId!=ROOT_ADMIN_ROLE_ID){
             AdminRole role = adminRoleRepository.getOne(roleId);
             List<Long> permIds = role.getPermissionSet().stream().map(p -> p.getId()).collect(Collectors.toList());
             eq=eq.and(QAdminPermission.adminPermission.id.in(permIds));
@@ -148,4 +150,14 @@ public class AdminPermissionServiceImpl extends BaseServiceImpl<AdminPermission,
     public void delMenu(Long id) {
 
     }
+
+    @Override
+    public boolean checkRoleByAdmin() {
+        AdminUser user = (AdminUser) SpringWebTool.getSession().getAttribute("user");
+        if (user.getRoleId()==ROOT_ADMIN_ROLE_ID){
+            return true;
+        }
+            return false;
+    }
+
 }

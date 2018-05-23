@@ -17,34 +17,34 @@ import java.sql.Timestamp;
 public class AdminUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
     /**
      * 用户名
      */
     @Column(unique = true)
-    private String username;
+    public String username;
     /**
      * 密码
      */
-    private String pwd;
+    public String pwd;
     /**
      * 昵称
      */
-    private String nickName;
+    public String nickName;
 
     @Enumerated(value = EnumType.STRING)
-    private Status status;
+    public Status status;
 
     @Column(name = "role_id")
-    private Long roleId;
+    public Long roleId;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id",insertable = false,updatable = false)
-    private AdminRole adminRole;
+    public AdminRole adminRole;
     /**
      * 软删除标记
      */
     @Column(name = "_delete")
-    private Boolean delete;
+    public Boolean delete;
 
     /**
      * 创建时间

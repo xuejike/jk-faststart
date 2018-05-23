@@ -1,4 +1,4 @@
-package com.github.xuejike.springboot.jkfaststart;
+package com.github.xuejike.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

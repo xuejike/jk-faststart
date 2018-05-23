@@ -1,6 +1,7 @@
 package com.github.xuejike.springboot.jkfaststart.controller.admin;
 
 import com.bidanet.bdcms.core.bean.AjaxCallBack;
+import com.bidanet.bdcms.core.vo.Page;
 import com.bidanet.springmvc.demo.jkbuilder.JkTableBuilder;
 import com.github.xuejike.springboot.jkfaststart.JkConfig;
 import com.github.xuejike.springboot.jkfaststart.controller.admin.view.role.TableRole;
@@ -31,7 +32,7 @@ public class RoleController {
 
     @RequestMapping("/index")
     @ResponseBody
-    public String index(Model model){
+    public String index(Model model, Page page){
         List<AdminRole> list = adminRoleService.getList();
 
 //        return JkTableBuilder.create(TableRole.class).build(model);

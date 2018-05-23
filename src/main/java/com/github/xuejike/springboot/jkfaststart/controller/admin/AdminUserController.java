@@ -34,24 +34,27 @@ public class AdminUserController {
 
     @RequestMapping("/add")
     public String add(AddAdminUser addAdminUser,Model model){
+
         return JkFormBuilder.create(addAdminUser).build(model);
     }
 
     @RequestMapping("add_save")
     @ResponseBody
-    public AjaxCallBack addSave(AddAdminUser addAdminUser){
-        adminUserService.saveUser(addAdminUser);
+    public AjaxCallBack addSave(AddAdminUser addAdminUser,UpdateAdminUser updateAdminUser){
+        adminUserService.saveUser(addAdminUser,updateAdminUser);
         return AjaxCallBack.saveSuccess();
     }
 
     @RequestMapping("/edit")
+
     public String edit(Long id,Model model){
         AdminUser user = adminUserService.get(id);
         AddAdminUser addAdminUser = new AddAdminUser();
         UpdateAdminUser updateAdminUser = new UpdateAdminUser();
         BeanUtils.copyProperties(user,addAdminUser);
         BeanUtils.copyProperties(user,updateAdminUser);
-        return JkFormBuilder.create(addAdminUser).addForm(updateAdminUser).build(model);
+        return JkFormBuilder.create(addAdminUser)
+                .addForm(updateAdminUser).build(model);
     }
     @RequestMapping("/data")
     @ResponseBody

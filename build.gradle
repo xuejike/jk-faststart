@@ -90,7 +90,7 @@ dependencies {
 	compile 'com.querydsl:querydsl-apt:4.1.4:jpa'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
-	compile 'com.github.xuejike:spring_xuejike_tpl:57c5850'
+	compile 'com.github.xuejike:spring_xuejike_tpl:9258f80bca'
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.2.40'
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 	//Fill this in with the version of kotlinx in use in your project
