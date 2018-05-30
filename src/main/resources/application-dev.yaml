@@ -1,8 +1,8 @@
 spring:
   datasource:
     name: jk-fast-start
-    url: jdbc:mysql://127.0.0.1:3306/jk_fast_start_db?useUnicode=true
-    username: root
+    url: jdbc:mysql://116.62.52.225:3306/wg_chesupai_db?useUnicode=true
+    username: wgcsp
     driver-class-name: com.mysql.jdbc.Driver
     password: 123456
   jpa:
